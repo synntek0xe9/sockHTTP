@@ -8,9 +8,5 @@ It's a bit slower than ffuf (like 20% on same amount of threads), but it's scrip
 # Instalation
 Download recent package using releases button (sorry not added to pip packages yet)  
   
-then install with pip
-
-windows  
-```powershell pip install sockHTTP C:\path\to\folder\in\which\file\is```  
-linux  
-```bash pip install sockHTTP /path/to/folder/where/file/is```  
+then install with  
+```pip install ./sockHTTP(...).tar.gz```
