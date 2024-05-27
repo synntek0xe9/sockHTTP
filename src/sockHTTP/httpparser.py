@@ -1,4 +1,4 @@
-import errorlogger
+import sockHTTP.errorlogger
 
 
 # split head and content; possibly more (x-form or sth)
@@ -23,7 +23,7 @@ def parse_headers(headbytes):
         split_index = line.find(": ")
 
         if split_index == -1:
-            errorlogger.main.saveError('Error on parsing headers')
+            sockHTTP.errorlogger.main.saveError('Error on parsing headers')
         else:
             header_name = line[:split_index]
             header_val = line[(split_index+2):]
@@ -48,7 +48,7 @@ def quickparse(rawresp: bytes):
 
     if headbytes == None:
 
-        errorlogger.main.saveError('Error on loading headers')
+        sockHTTP.errorlogger.main.saveError('Error on loading headers')
 
     headers = None
     if headbytes != None:
@@ -56,13 +56,13 @@ def quickparse(rawresp: bytes):
 
     if not "Content-Length" in headers.keys():
 
-        errorlogger.main.saveError('Error on headers - no Content-Length')
+        sockHTTP.errorlogger.main.saveError('Error on headers - no Content-Length')
     
 
     else: 
         if not int(headers["Content-Length"]) == len(contentbytes):
 
-            errorlogger.main.saveError('Error on headers - Content-Length doesn\'t match length')
+            sockHTTP.errorlogger.main.saveError('Error on headers - Content-Length doesn\'t match length')
 
 
     return headers, contentbytes

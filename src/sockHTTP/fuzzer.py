@@ -1,5 +1,5 @@
 
-import httpreq
+import sockHTTP.httpreq
 import socket
 import ssl
 
@@ -12,7 +12,7 @@ def httpfuzzer(wordlist, url, path="/", port=80, options={}):
     sock.connect((url, 80))
 
     for wordlist_entry in wordlist:
-        resp = httpreq.httpreq(url, path=path + wordlist_entry,sock=sock)
+        resp = sockHTTP.httpreq.httpreq(url, path=path + wordlist_entry,sock=sock)
         print(wordlist_entry, len(resp))
     
     sock.close()
@@ -27,7 +27,7 @@ def httpsfuzzer(wordlist, hostname, path="/", port=443, options={}):
     sock_wrap.connect((hostname, port))
 
     for wordlist_entry in wordlist:
-        resp = httpreq.httpsreq(hostname, path = path + wordlist_entry, sock_wrap=sock_wrap)
+        resp = sockHTTP.httpreq.httpsreq(hostname, path = path + wordlist_entry, sock_wrap=sock_wrap)
         print(wordlist_entry, len(resp))
     
     sock_wrap.close()

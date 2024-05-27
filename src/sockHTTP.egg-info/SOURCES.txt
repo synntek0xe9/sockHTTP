@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/sockHTTP/__init__.py
+src/sockHTTP/crawlerconfig.py
+src/sockHTTP/errorlogger.py
+src/sockHTTP/fuzzer.py
+src/sockHTTP/httpparser.py
+src/sockHTTP/httpreq.py
+src/sockHTTP/httpreqCrafter.py
+src/sockHTTP/httpreqcrafter.py
+src/sockHTTP.egg-info/PKG-INFO
+src/sockHTTP.egg-info/SOURCES.txt
+src/sockHTTP.egg-info/dependency_links.txt
+src/sockHTTP.egg-info/top_level.txt

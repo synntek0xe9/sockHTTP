@@ -3,7 +3,7 @@ import socket
 import ssl
 import time
 
-import httpreqCrafter
+import sockHTTP.httpreqcrafter
 
 
 
@@ -55,7 +55,7 @@ def httpreq(hostname, port=80, path="/", method="GET", customReqBody=None, sock=
     if customReqBody != None:
         sock.sendall(customReqBody)
     else: 
-        sock.sendall( httpreqCrafter.craftHttpReq(hostname, method, path).encode() )
+        sock.sendall( sockHTTP.httpreqcrafter.craftHttpReq(hostname, method, path).encode() )
 
     output = recvall(sock)
 
@@ -81,7 +81,7 @@ def httpsreq(hostname, port=443, path="/",method="GET", customReqBody=None, sock
     if customReqBody != None:
         sock_wrap.sendall(customReqBody)
     else: 
-        sock_wrap.sendall( httpreqCrafter.craftHttpReq(hostname, method, path).encode() )
+        sock_wrap.sendall( sockHTTP.httpreqcrafter.craftHttpReq(hostname, method, path).encode() )
 
     output = recvall(sock_wrap)
 
