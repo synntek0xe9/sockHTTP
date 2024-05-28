@@ -10,7 +10,6 @@ Download recent package using releases button (sorry not added to pip packages y
   
 then install with  
 ```pip install ./sockHTTP(...).tar.gz```
-<<<<<<< HEAD
 
 # Usage
  
@@ -46,5 +45,3 @@ print(len(body))
 
 ```  
   
-=======
->>>>>>> 1fcc6c976ce684499bb72802739fbbebb8e6d9c9
