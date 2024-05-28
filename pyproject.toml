@@ -1,6 +1,6 @@
 [project]
 name = "sockHTTP"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="synntek0xe9", email="synntek0xe9@gmail.comm" },
 ]
