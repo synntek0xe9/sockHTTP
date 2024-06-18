@@ -15,8 +15,8 @@ then install with
  
 quick http request
 ```py
-raw_resp = sockHTTP.httpreq.httpsreq("www.example.com",path="/")
-headers, body = sockHTTP.httpparser.quickparse(raw_resp)
+raw_resp = sockHTTP.Req.httpsReq("www.example.com",path="/")
+headers, body = sockHTTP.Parser.quickParse(raw_resp)
 
 ```
 
@@ -24,20 +24,20 @@ control over handling http response
 ```py 
 import gzip
 
-raw_resp = sockHTTP.httpreq.httpsreq("www.example.com",path="/")
-raw_head, raw_body = sockHTTP.httpparser.split_segments(raw_resp)
-headers = sockHTTP.httpparser.parse_headers(raw_head)
+raw_resp = sockHTTP.Req.httpsReq("www.example.com",path="/")
+raw_head, raw_body = sockHTTP.Parser.splitSegments(raw_resp)
+headers = sockHTTP.Parser.parseHeaders(raw_head)
 # print(headers)
 body = raw_body # if nothing happens
 if "Transfer-Encoding" in headers.keys():
     if headers["Transfer-Encoding"] == "chunked":
-        raw_body = sockHTTP.httpparser.process_tranfer_chunked("")
+        body = sockHTTP.Parser.processTranferChunked(body)
 
 if "Content-Encoding" in headers.keys():
     if headers["Content-Encoding"] == "gzip":
-        body = gzip.decompress(raw_body)
+        body = gzip.decompress(body)
 
-# above handling should work in like 95% scenarios. I would probably add more features some day
+# above handling should work in like 90% scenarios. It would go up to 95% if you specify bigger timeout like (raw_resp = ...httpReq(... , timeout=10))). I would probably add more features some day
 
 print(body)
 print(headers)
