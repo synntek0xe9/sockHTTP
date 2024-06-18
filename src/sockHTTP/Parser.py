@@ -3,7 +3,7 @@ import gzip
 
 # split head and content; possibly more (x-form or sth)
 
-def split_segments(rawresp):
+def splitSegments(rawresp):
 
     index = rawresp.find(b'\r\n\r\n')
     if index != -1:
@@ -12,7 +12,7 @@ def split_segments(rawresp):
     return None, rawresp
 
 
-def parse_headers(headbytes):
+def parseHeaders(headbytes):
     headstr = headbytes.decode()
 
     lines = headstr.split("\r\n")[1:] # (skip HTTP/1.1  ...)
@@ -38,7 +38,7 @@ def parse_headers(headbytes):
         
         
 
-def process_tranfer_chunked(raw):
+def processTranferChunked(raw):
     
     length = len(raw)
 
@@ -61,10 +61,10 @@ def process_tranfer_chunked(raw):
     return processed
 
 
-def quickparse(rawresp: bytes):
+def quickParse(rawresp: bytes):
     
 
-    headbytes, contentbytes = split_segments(rawresp)
+    headbytes, contentbytes = splitSegments(rawresp)
 
     if headbytes == None:
 
@@ -72,7 +72,7 @@ def quickparse(rawresp: bytes):
 
     headers = None
     if headbytes != None:
-        headers = parse_headers(headbytes)
+        headers = parseHeaders(headbytes)
 
     keys = headers.keys()
 
@@ -88,7 +88,7 @@ def quickparse(rawresp: bytes):
 
     if "Transfer-Encoding" in keys:
         if headers["Transfer-Encoding"] == "chunked":
-            contentbytes = process_tranfer_chunked(contentbytes)
+            contentbytes = processTranferChunked(contentbytes)
 
     if "Content-Encoding" in keys:
         if headers["Content-Encoding"] == "gzip":
@@ -98,9 +98,9 @@ def quickparse(rawresp: bytes):
 
 
 
-def calc_len(rawresp: bytes):
+def calcLen(rawresp: bytes):
 
-    headbytes, contentbytes = split_segments(rawresp)
+    headbytes, contentbytes = splitSegments(rawresp)
 
 
     return len(contentbytes)

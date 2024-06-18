@@ -1,9 +1,9 @@
 
 
 
-class Errorlogger():
+class ErrorLogger():
 
     def saveError(self, msg):
         None
 
-main = Errorlogger()
+main = ErrorLogger()

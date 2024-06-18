@@ -2,22 +2,26 @@
 import socket
 import ssl
 import time
-
-import sockHTTP.httpreqcrafter
-
+import math
 
 
-def recvall(sock, space_max_tries=2, init_max_tries=100):
+import sockHTTP.ReqCrafter
+
+
+
+def recvall(sock, initWait=0, initMaxTries=50, initTimeout=0.1, betweenMaxTries=3, betweenTimeout=0.01):
     BUFF_SIZE = 65536 # 64 KiB
     data = b''
     none_count = 0
-    time.sleep(0.1)
-    sock.settimeout(0.01)
+    time.sleep(initWait)
+    sock.settimeout(initTimeout)
     while True:
         #print(null_count, end=" ")
         part = b""
         try:
             part = sock.recv(BUFF_SIZE)
+            if len(data) == 0:
+                sock.settimeout(betweenTimeout)
         except TimeoutError:
             part=b""
         data += part
@@ -25,9 +29,9 @@ def recvall(sock, space_max_tries=2, init_max_tries=100):
         if len(part) == 0:
             none_count+=1
             if len(data) == 0:
-                if none_count >= init_max_tries:
+                if none_count >= initMaxTries:
                     break
-            elif none_count >= space_max_tries: # max 3 can configure
+            elif none_count >= betweenMaxTries: # max 3 can configure
                 # either 0 or end of data
                 break
         else:
@@ -40,7 +44,7 @@ def recvall(sock, space_max_tries=2, init_max_tries=100):
 # notes - lack many features, unstable, works
 
 
-def httpreq(hostname, port=80, path="/", method="GET", customReqBody=None, sock=None):
+def httpReq(hostname, port=80, path="/", method="GET", customReqBody=None, sock=None, timeout=5, timeoutAdvOpt=None):
     
     opened_sock = True
 
@@ -55,9 +59,29 @@ def httpreq(hostname, port=80, path="/", method="GET", customReqBody=None, sock=
     if customReqBody != None:
         sock.sendall(customReqBody)
     else: 
-        sock.sendall( sockHTTP.httpreqcrafter.craftHttpReq(hostname, method, path).encode() )
+        sock.sendall( sockHTTP.ReqCrafter.craftHttpReq(hostname, method, path).encode() )
 
-    output = recvall(sock)
+    output = None
+
+    received = False
+
+    if type(timeoutAdvOpt) == dict:
+        
+        if all([key in timeoutAdvOpt.keys() for key in ['initWait', 'initMaxTries', 'initTimeout', 'betweenMaxTries', 'betweenTimeout']]):
+
+            received = True
+            output = recvall(sock, initWait=timeoutAdvOpt['initWait'], initMaxTries=timeoutAdvOpt['initMaxTries'], initTimeout=timeoutAdvOpt['initTimeout'], betweenMaxTries=timeoutAdvOpt['betweenMaxTries'], betweenTimeout=timeoutAdvOpt['betweenTimeout'])
+            
+
+    
+    if not received:
+        if type(timeout) == int and timeout > 0:
+            initTimeout = 0.1
+            initMaxTries = math.ceil(timeout / initTimeout)
+            output = recvall(sock, initMaxTries=initMaxTries, initTimeout=initTimeout)
+        else:
+            output = recvall(sock)
+
 
     if opened_sock: sock.close()
 
@@ -66,7 +90,7 @@ def httpreq(hostname, port=80, path="/", method="GET", customReqBody=None, sock=
 
 # notes - lack many features, unstable, works
 
-def httpsreq(hostname, port=443, path="/",method="GET", customReqBody=None, sock_wrap=None):
+def httpsReq(hostname, port=443, path="/",method="GET", customReqBody=None, sock_wrap=None):
     
     opened_sock = True
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1) could be usefull is some scenarios
@@ -81,7 +105,7 @@ def httpsreq(hostname, port=443, path="/",method="GET", customReqBody=None, sock
     if customReqBody != None:
         sock_wrap.sendall(customReqBody)
     else: 
-        sock_wrap.sendall( sockHTTP.httpreqcrafter.craftHttpReq(hostname, method, path).encode() )
+        sock_wrap.sendall( sockHTTP.ReqCrafter.craftHttpReq(hostname, method, path).encode() )
 
     output = recvall(sock_wrap)
 
