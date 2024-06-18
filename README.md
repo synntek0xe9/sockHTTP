@@ -37,7 +37,7 @@ if "Content-Encoding" in headers.keys():
     if headers["Content-Encoding"] == "gzip":
         body = gzip.decompress(raw_body)
 
-# above handling should work in like 95% scenarios. I would propably add more features some day
+# above handling should work in like 95% scenarios. I would probably add more features some day
 
 print(body)
 print(headers)
