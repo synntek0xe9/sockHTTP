@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: sockHTTP
-Version: 0.0.2
+Version: 0.0.3
 Summary: A small package to help with (faster) HTTP(s) connection using raw sockets
 Author-email: synntek0xe9 <synntek0xe9@gmail.comm>
 Project-URL: Homepage, https://github.com/synntek0xe9/sockhttp

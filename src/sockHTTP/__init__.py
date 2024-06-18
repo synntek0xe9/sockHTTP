@@ -1,6 +1,5 @@
-import sockHTTP.crawlerconfig
-import sockHTTP.errorlogger
-import sockHTTP.fuzzer
-import sockHTTP.httpparser
-import sockHTTP.httpreq
-import sockHTTP.httpreqcrafter
+import sockHTTP.ErrorLogger
+import sockHTTP.Fuzzer
+import sockHTTP.Parser
+import sockHTTP.Req
+import sockHTTP.ReqCrafter

@@ -1,4 +1,4 @@
-import sockHTTP.errorlogger
+import sockHTTP.ErrorLogger
 import gzip
 
 # split head and content; possibly more (x-form or sth)

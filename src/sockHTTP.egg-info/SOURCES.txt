@@ -1,16 +1,12 @@
 LICENSE
 README.md
 pyproject.toml
-src/sockHTTP/CrawlerConfig.py
 src/sockHTTP/ErrorLogger.py
 src/sockHTTP/Fuzzer.py
 src/sockHTTP/Parser.py
 src/sockHTTP/Req.py
 src/sockHTTP/ReqCrafter.py
 src/sockHTTP/__init__.py
-src/sockHTTP/crawlerconfig.py
-src/sockHTTP/errorlogger.py
-src/sockHTTP/fuzzer.py
 src/sockHTTP.egg-info/PKG-INFO
 src/sockHTTP.egg-info/SOURCES.txt
 src/sockHTTP.egg-info/dependency_links.txt

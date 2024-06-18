@@ -36,7 +36,6 @@ def httpsFuzzer(wordlist, hostname, path="/", port=443, options={}):
 
 def fuzzer(wordlist, url, options):
 
-
     split = url.split("://")
 
     if split[0] == "http":
